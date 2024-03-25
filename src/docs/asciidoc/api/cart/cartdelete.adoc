@@ -1,4 +1,4 @@
-==== *장바구니 삭제*
+=== *장바구니 삭제*
 
 .*HTTP Request*
 include::{snippets}/cart-delete/http-request.adoc[]

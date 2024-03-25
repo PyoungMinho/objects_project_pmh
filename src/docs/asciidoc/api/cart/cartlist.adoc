@@ -1,4 +1,4 @@
-==== *장바구니 조회*
+=== *장바구니 조회*
 
 .*반환*
 image:../image/cart/resp_cart_list.png[]

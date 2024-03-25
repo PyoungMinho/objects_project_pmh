@@ -1,6 +1,6 @@
 spring:
   profiles:
-    default: local
+    default: dev
 
 ---
 
@@ -43,6 +43,48 @@ spring:
 logging:
   level:
     org.hibernate.sql: debug
+  file:
+    path:
+      all: src/main/resources/logs/all
+      info: src/main/resources/logs/info
+      warn: src/main/resources/logs/warn
+      error: src/main/resources/logs/error
+  logback:
+    rollingpolicy:
+      max-history: 7 #7개 쌓이면 삭제
+      max-file-size: 10MB #파일 한개당 최대 사이즈
+      total-size-cap: 1GB #모든 로그 파일 사이즈
+      clean-history-on-start: true #서버 껐다 킬때마다 이전 로그 파일 삭제
+
+#   [타임스탬프][쓰레드명][UUID][로깅레벨][메시지]
+  pattern:
+    console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){green} %clr([%20.20thread]){cyan} %clr([%X{traceId}]){magenta} %clr(%-5level) %clr(-){faint} %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%20.20thread] [%X{traceId}] %-5level - %msg%n"
+
+# 액츄에이터 정보
+management:
+  info:
+    java:
+      enabled: true
+    os:
+      enabled: true
+    env:
+      enabled: true
+  server:
+    port: 8080
+#    port: 9292
+  endpoint:
+    shutdown:
+      enabled: true
+    health:
+#      show-details: always
+      show-components: always
+# 엔드포인트 노출
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
 
 payment:
   kakao:
@@ -53,6 +95,25 @@ host: "http://localhost:8080"
 jwt:
   # CLI 명령어 - openssl rand -base64 64 로 생성된 값
   secret: fMRb9kle/ImDQ7wB8+XPnuVH15M6xp60jKS7/mF7dNMFEvt9kNe4WioJfsHT6J6F4bynR8rqAR2Z8zYboQSG+A==
+
+info:
+  app:
+    name: hello-actuator
+    company: objects
+
+# 톰캣 정보 추가
+server:
+  tomcat:
+    mbeanregistry:
+      enabled: true
+
+springdoc:
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+  swagger-ui:
+    url: /docs/openapi3.yaml
+    path: /
+    disable-swagger-default-url: true
 
 ---
 
@@ -93,6 +154,16 @@ spring:
 logging:
   level:
     org.hibernate.sql: debug
+  logback:
+    rollingpolicy:
+      max-history: 7 #7개 쌓이면 삭제
+      max-file-size: 10MB #파일 한개당 최대 사이즈
+      total-size-cap: 1GB #모든 로그 파일 사이즈
+      clean-history-on-start: true #서버 껐다 킬때마다 이전 로그 파일 삭제
+
+  #   [타임스탬프][쓰레드명][UUID][로깅레벨][메시지]
+  pattern:
+    console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){green} %clr([%20.20thread]){cyan} %clr([%X{traceId}]){magenta} %clr(%-5level) %clr(-){faint} %msg%n"
 
 payment:
   kakao:
@@ -111,17 +182,34 @@ spring:
       on-profile: dev
 
   jpa:
-    show-sql: true
+    show-sql: false
     hibernate:
       ddl-auto: none
     properties:
       hibernate:
-        format_sql: true
+        format_sql: false
         default_batch_fetch_size: 100
 
 logging:
   level:
-    org.hibernate.sql: debug
+    org.hibernate.sql: info
+  file:
+    path:
+      all: /app/logs/all
+      info: /app/logs/info
+      warn: /app/logs/warn
+      error: /app/logs/error
+  logback:
+    rollingpolicy:
+      max-history: 7 #7개 쌓이면 삭제
+      max-file-size: 10MB #파일 한개당 최대 사이즈
+      total-size-cap: 1GB #모든 로그 파일 사이즈
+      clean-history-on-start: true #서버 껐다 킬때마다 이전 로그 파일 삭제
+
+  #   [타임스탬프][쓰레드명][UUID][로깅레벨][메시지]
+  pattern:
+    console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){green} %clr([%20.20thread]){cyan} %clr([%X{traceId}]){magenta} %clr(%-5level) %clr(-){faint} %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%20.20thread] [%X{traceId}] %-5level - %msg%n"
 
 payment:
   kakao:
@@ -131,3 +219,25 @@ decorator:
   datasource:
     p6spy:
       enable-logging: false
+
+management:
+  endpoint:
+    health:
+      show-components: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+server:
+  tomcat:
+    mbeanregistry:
+      enabled: true
+
+springdoc:
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+  swagger-ui:
+    url: /docs/openapi3.yaml
+    path: /
+    disable-swagger-default-url: true

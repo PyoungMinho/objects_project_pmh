@@ -1,0 +1,7 @@
+=== *입력값 유효성*
+
+*논리적 에러*
+include::{snippets}/error-invalid-request-field/http-response.adoc[]
+
+*타입 에러*
+include::{snippets}/error-invalid-request-field-type/http-response.adoc[]

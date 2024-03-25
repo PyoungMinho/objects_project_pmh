@@ -1,0 +1,13 @@
+=== *잘못된 URI 요청*
+
+*URI 오타*
+include::{snippets}/error-invalid-uri/http-response.adoc[]
+
+*PathVariable 에러*
+include::{snippets}/error-method-argument-type-mismatch/http-response.adoc[]
+
+*QueryParameter 에러*
+include::{snippets}/error-invalid-query-parameter/http-response.adoc[]
+
+*Http 메서드 에러*
+include::{snippets}/error-method-not-allowed/http-response.adoc[]

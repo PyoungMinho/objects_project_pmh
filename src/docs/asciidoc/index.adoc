@@ -16,120 +16,178 @@ v0.1, 2024-02-14
 
 == *회원*
 
-include::api/member/emailcheck.adoc[]
+include::api/member/auth/emailcheck.adoc[]
 {empty}
 {empty}
+
+=== *인증*
+include::api/member/auth/signup.adoc[]
+{empty}
+{empty}
+
+include::api/member/auth/signin.adoc[]
+{empty}
+{empty}
+
+include::api/member/auth/signout.adoc[]
+{empty}
+{empty}
+
+include::api/member/auth/reissue.adoc[]
+{empty}
+{empty}
+
+include::api/member/auth/authentication.adoc[]
+{empty}
+{empty}
+
 
 === *아이디/비밀번호 찾기*
-include::api/member/memberEmailFind.adoc[]
+include::api/member/account-info/memberEmailFind.adoc[]
 {empty}
 {empty}
 
-include::api/member/memberPasswordFind.adoc[]
+include::api/member/account-info/memberPasswordFind.adoc[]
 {empty}
 {empty}
 
-include::api/member/memberPasswordReset.adoc[]
+include::api/member/account-info/memberPasswordReset.adoc[]
 {empty}
 {empty}
 
 === *개인정보수정*
 
-include::api/member/memberEmail.adoc[]
+include::api/member/account-info/memberEmail.adoc[]
 {empty}
 {empty}
 
-include::api/member/getMemberAccountInfo.adoc[]
+include::api/member/account-info/getMemberAccountInfo.adoc[]
 {empty}
 {empty}
 
-include::api/member/patchMemberAccountInfo.adoc[]
+include::api/member/account-info/patchMemberAccountInfo.adoc[]
 {empty}
 {empty}
 
 === *주소*
-include::api/member/findAddress.adoc[]
+include::api/member/address/findAddress.adoc[]
 {empty}
 {empty}
 
-include::api/member/addAddress.adoc[]
+include::api/member/address/addAddress.adoc[]
 {empty}
 {empty}
 
-include::api/member/updateAddress.adoc[]
+include::api/member/address/updateAddress.adoc[]
 {empty}
 {empty}
 
-include::api/member/deleteAddress.adoc[]
+include::api/member/address/deleteAddress.adoc[]
 {empty}
 {empty}
 
 === *위시리스트*
-include::api/member/checkWishlist.adoc[]
+include::api/member/wishlist/checkWishlist.adoc[]
 {empty}
 {empty}
 
-include::api/member/findWishlist.adoc[]
+include::api/member/wishlist/findWishlist.adoc[]
 {empty}
 {empty}
 
-include::api/member/addWishlist.adoc[]
+include::api/member/wishlist/addWishlist.adoc[]
 {empty}
 {empty}
 
-include::api/member/deleteWishlist.adoc[]
-{empty}
-{empty}
-
-=== *인증*
-include::api/member/signup.adoc[]
-{empty}
-{empty}
-
-include::api/member/signin.adoc[]
-{empty}
-{empty}
-
-include::api/member/signout.adoc[]
-{empty}
-{empty}
-
-include::api/member/reissue.adoc[]
+include::api/member/wishlist/deleteWishlist.adoc[]
 {empty}
 {empty}
 {empty}
 {empty}
 
 === *멤버십*
-include::api/member/kakaoPaySubsReady.adoc[]
+include::api/member/membership/kakaoPaySubsReady.adoc[]
 {empty}
 {empty}
 
-include::api/member/kakaoPaySubsApproved.adoc[]
-{empty}
-{empty}
-
-include::api/member/kakaoPaySubsSubscribtion.adoc[]
-{empty}
-{empty}
+include::api/member/membership/kakaoPaySubsApproved.adoc[]
 {empty}
 {empty}
 
 == *상품*
-include::api/product/productcreate.adoc[]
+include::api/product/productCreate.adoc[]
 {empty}
 {empty}
 
-=== *리뷰*
+=== *상품 조회*
+include::api/product/productSearchByCategory.adoc[]
+{empty}
+{empty}
+
+include::api/product/productGetDetailInfo.adoc[]
+{empty}
+{empty}
+
+== *카테고리*
+include::api/category/categoryGetTotaIinfo.adoc[]
+{empty}
+{empty}
+
+== *리뷰*
+include::api/review/review-get-surveys.adoc[]
+{empty}
+{empty}
+
 include::api/review/review-create.adoc[]
+{empty}
+{empty}
+
+include::api/review/review-update.adoc[]
+{empty}
+{empty}
+
+include::api/review/review-delete.adoc[]
+{empty}
+{empty}
+
+include::api/review/review-get-single-review.adoc[]
+{empty}
+{empty}
+
+include::api/review/reviews-count-of-product.adoc[]
+{empty}
+{empty}
+
+include::api/review/reviews-of-product.adoc[]
+{empty}
+{empty}
+
+include::api/review/review-count-review-likes.adoc[]
+{empty}
+{empty}
+
+include::api/review/review-upsert-review-like.adoc[]
+{empty}
+{empty}
+
+include::api/review/reviews-count-of-member-unwritten.adoc[]
+{empty}
+{empty}
+
+include::api/review/reviews-of-member-unwritten.adoc[]
+{empty}
+{empty}
+
+include::api/review/reviews-count-of-member.adoc[]
+{empty}
+{empty}
+
+include::api/review/reviews-of-member.adoc[]
 {empty}
 {empty}
 
 == *주문*
 === *주문서/결제*
-include::api/order/ordercheckout.adoc[]
-{empty}
-{empty}
 
 include::api/order/ordercreate.adoc[]
 {empty}
@@ -205,5 +263,7 @@ include::api/cart/cartupdate.adoc[]
 {empty}
 {empty}
 
-
-
+== *공통 에러 응답*
+include::api/errors/invalidinput.adoc[]
+include::api/errors/invaliduri.adoc[]
+include::api/errors/internalserver.adoc[]

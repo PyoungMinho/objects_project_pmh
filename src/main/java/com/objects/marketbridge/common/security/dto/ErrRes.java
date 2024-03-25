@@ -2,6 +2,7 @@ package com.objects.marketbridge.common.security.dto;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.objects.marketbridge.common.exception.exceptions.ErrorCode;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,37 +11,36 @@ import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 
-import static com.objects.marketbridge.common.security.constants.SecurityConst.LOCATION_FILTER;
-
 @Getter
 @ToString
 public class ErrRes {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    private final int status;
-    private final String error;
-    private final String message;
+    private final int code;
+    private final String status;
     private final String path;
-    private final String location;
+    private final ErrorCode errorCode;
+    private final String message;
     private final String timeStamp;
 
     @Builder(access = AccessLevel.PRIVATE)
-    public ErrRes(int status, String error, String message, String path) {
+    public ErrRes(int code, String status, String path, ErrorCode errorCode, String message) {
+        this.code = code;
         this.status = status;
-        this.error = error;
-        this.message = message;
         this.path = path;
-        this.location = LOCATION_FILTER;
+        this.errorCode = errorCode;
+        this.message = message;
         this.timeStamp = (LocalDateTime.now()).toString();
     }
 
-    public static ErrRes of(HttpStatus httpStatus, String message, String uri) {
+    public static ErrRes of(int code, String status, String message, String path, ErrorCode errorCode) {
         return ErrRes.builder()
-                .status(httpStatus.value())
-                .error(httpStatus.getReasonPhrase())
+                .code(code)
+                .status(status)
+                .path(path)
+                .errorCode(errorCode)
                 .message(message)
-                .path(uri)
                 .build();
     }
     public String convertToJson() throws JsonProcessingException {

@@ -1,8 +1,0 @@
-==== *개인정보수정*
-
-.*HTTP Request*
-include::{snippets}/patch-member-account-info/http-request.adoc[]
-
-.*HTTP Response*
-include::{snippets}/patch-member-account-info/http-response.adoc[]
-include::{snippets}/patch-member-account-info/response-fields.adoc[]

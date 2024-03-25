@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.objects.marketbridge.common.security.constants.SecurityConst;
 import com.objects.marketbridge.common.security.constants.SecurityErrConst;
 import com.objects.marketbridge.common.security.service.JwtTokenProvider;
-import com.objects.marketbridge.member.dto.SignInDto;
+import com.objects.marketbridge.domains.member.dto.SignInDto;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletInputStream;

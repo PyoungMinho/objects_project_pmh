@@ -2,6 +2,7 @@
 
 .*HTTP Request*
 include::{snippets}/order-return-detail/http-request.adoc[]
+include::{snippets}/order-return-detail/query-parameters.adoc[]
 
 .*HTTP Response*
 include::{snippets}/order-return-detail/http-response.adoc[]

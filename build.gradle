@@ -1,8 +1,12 @@
+import org.hidetake.gradle.swagger.generator.GenerateSwaggerUI
+
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.2.1'
 	id 'io.spring.dependency-management' version '1.1.4'
 	id "org.asciidoctor.jvm.convert" version '3.3.2'
+	id 'com.epages.restdocs-api-spec' version '0.19.2'
+	id 'org.hidetake.swagger.generator' version '2.19.2'
 }
 
 group = 'com.objects'
@@ -38,9 +42,12 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testAnnotationProcessor 'org.projectlombok:lombok'
 
-	// RestDocs
+	// RestDocs & OpenApiSpec
 	asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+	testImplementation "com.epages:restdocs-api-spec-mockmvc:0.19.2"
+	swaggerUI 'org.webjars:swagger-ui:5.12.0'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.4.0'
 
 	//Querydsl 추가
 	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
@@ -66,19 +73,62 @@ dependencies {
 
 	// Apache POI //category데이터 excel에서 db로 등록시 필요
 	implementation 'org.apache.poi:poi:4.1.2'
-	implementation 'org.apache.poi:poi-ooxml:4.1.2' // 1.19	버전의 취약점으로 1.21버전 추가 설치
-	implementation 'org.apache.commons:commons-compress:1.21'
+	implementation 'org.apache.poi:poi-ooxml:4.1.2'
+	implementation 'org.apache.commons:commons-compress:1.26.0'
 
 	//LocalDateTime 처리 라이브러리
-//	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 	implementation 'org.json:json:20231013'
 
 	//hibernate 5
 	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5-jakarta'
+
+	implementation 'org.springframework.boot:spring-boot-starter-actuator' // 액츄에이터 추가
+	implementation 'io.micrometer:micrometer-registry-prometheus' // 프로메테우스 추가
 }
 
 ext { // 전역 변수
 	snippetsDir = file('build/generated-snippets')
+}
+
+swaggerSources {
+	sample {
+		setInputFile(file("build/api-spec/openapi3.yaml"))
+	}
+}
+
+openapi3 {
+	servers = [{ url = "http://localhost:8080" }, { url = "https://objects-mb.com" }]
+	title = "Market Bridge API Documentation"
+	description = "Market Bridge REST Docs with SwaggerUI."
+	version = "0.0.1"
+	format = "yaml"
+}
+
+tasks.withType(GenerateSwaggerUI).configureEach {
+	dependsOn('openapi3')
+	doFirst {
+		def swaggerUIFile = file("build/api-spec/openapi3.yaml")
+
+		def securitySchemesContent =  "  securitySchemes:\n" +  \
+                                      "    APIKey:\n" +  \
+                                      "      type: apiKey\n" +  \
+                                      "      name: Authorization\n" +  \
+                                      "      in: header\n" + \
+                                      "security:\n" +
+				"  - APIKey: []"
+
+		swaggerUIFile.append securitySchemesContent
+	}
+
+	copy {
+		from 'build/api-spec'
+		into 'src/main/resources/static/docs'
+	}
+
+	copy {
+		from 'build/swagger-ui-sample'
+		into 'src/main/resources/static/swagger-ui-sample'
+	}
 }
 
 test {
@@ -98,40 +148,17 @@ asciidoctor {
 	dependsOn test
 }
 
-//// static/docs 폴더 비우기
-//asciidoctor.doFirst {
-//	delete file('src/main/resources/static/docs')
-//}
-//
-//// asccidoctor 작업 이후 생성된 HTML 파일을 static/docs 로 copy
-//task copyDocument(type: Copy) {
-//	dependsOn asciidoctor
-//	from file("build/docs/asciidoc")
-//	into file("src/main/resources/static/docs")
-//}
-//
-//// build 의 의존작업 명시
-//build {
-//	dependsOn copyDocument
-//}
-
-bootJar {
-	dependsOn asciidoctor
-}
-
-
 def querydslDir = "src/main/generated"
 
 tasks.withType(JavaCompile).configureEach {
 	options.getGeneratedSourceOutputDirectory().set(file(querydslDir))
-//	options.compilerArgs.add("parameters")
 }
 
 clean.doLast {
 	file(querydslDir).deleteDir()
 }
 
-
-//tasks.withType(JavaCompile) {
-//	options.compilerArgs << "-parameters"
-//}
+bootJar {
+	dependsOn(asciidoctor)
+	dependsOn(generateSwaggerUISample)
+}

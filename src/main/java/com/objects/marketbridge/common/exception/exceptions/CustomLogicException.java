@@ -1,6 +1,6 @@
 package com.objects.marketbridge.common.exception.exceptions;
 
-import com.objects.marketbridge.common.service.port.DateTimeHolder;
+import com.objects.marketbridge.common.utils.DateTimeHolder;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -44,6 +44,15 @@ public class CustomLogicException extends RuntimeException {
                 .errorCode(errorCode)
                 .message(message)
                 .timestamp(timestamp)
+                .build();
+    }
+
+    public static CustomLogicException createBadRequestError(ErrorCode errorCode, String message) {
+        return CustomLogicException.builder()
+                .httpStatus(BAD_REQUEST)
+                .errorCode(errorCode)
+                .message(message)
+                .timestamp(LocalDateTime.now())
                 .build();
     }
     public static CustomLogicException createBadRequestError(ErrorCode errorCode, LocalDateTime timestamp) {

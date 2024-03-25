@@ -1,4 +1,4 @@
-==== *장바구니 담기*
+=== *장바구니 담기*
 
 .*반환*
 image:../image/cart/resp_cart_add.png[]
@@ -11,3 +11,9 @@ include::{snippets}/cart-add/request-fields.adoc[]
 .*HTTP Response*
 include::{snippets}/cart-add/http-response.adoc[]
 include::{snippets}/cart-add/response-fields.adoc[]
+
+.*Error Response*
+*중복 저장*
+include::{snippets}/cart-add-duplicated-error/http-response.adoc[]
+*재고 소진*
+include::{snippets}/cart-add-outofstock-error/http-response.adoc[]

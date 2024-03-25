@@ -1,0 +1,3 @@
+=== *서버 에러*
+
+include::{snippets}/error-internal-server/http-response.adoc[]

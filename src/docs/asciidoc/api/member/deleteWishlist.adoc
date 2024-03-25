@@ -1,8 +1,0 @@
-==== *등록된 위시리스트 삭제*
-
-.*HTTP Request*
-include::{snippets}/delete-wishlist/http-request.adoc[]
-
-.*HTTP Response*
-include::{snippets}/delete-wishlist/http-response.adoc[]
-include::{snippets}/delete-wishlist/response-fields.adoc[]

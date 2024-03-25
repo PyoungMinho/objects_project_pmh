@@ -24,7 +24,7 @@ create table cart
     member_id  bigint      null,
     product_id bigint      null,
     is_subs    bit         null,
-    quantity   int         null,
+    quantity   bigint      null,
     created_at datetime(6) null,
     updated_at datetime(6) null,
     deleted_at datetime(6) null
@@ -136,6 +136,7 @@ create table membership
     card_purchase_name varchar(255) null,
     card_no            varchar(255) null,
     card_install_month bigint       null,
+    next_billing_date  date         null,
     created_at         datetime(6)  null,
     updated_at         datetime(6)  null,
     deleted_at         datetime(6)  null
@@ -292,8 +293,8 @@ create table review
         primary key,
     member_id       bigint      null,
     product_id      bigint      null,
-    order_detail_id bigint      null,
     rating          bigint      null,
+    summary         text        null,
     content         text        null,
     created_at      datetime(6) null,
     updated_at      datetime(6) null,
@@ -308,15 +309,16 @@ create table review_image
     review_id       bigint      null,
     image_id        bigint      null,
     seq_no          bigint      null,
+    description     varchar(255) null,
     created_at      datetime(6) null,
     updated_at      datetime(6) null,
     deleted_at      datetime(6) null
 )
 ;
 
-create table review_likes
+create table review_like
 (
-    review_likes_id bigint auto_increment
+    review_like_id bigint auto_increment
         primary key,
     review_id       bigint      null,
     member_id       bigint      null,
@@ -331,7 +333,7 @@ create table review_survey
     review_survey_id          bigint auto_increment
         primary key,
     review_id                 bigint      null,
-    review_survey_category_id bigint      null,
+    survey_category_id bigint      null,
     survey_content_id         bigint      null,
     created_at                datetime(6) null,
     updated_at                datetime(6) null,
@@ -339,9 +341,9 @@ create table review_survey
 )
 ;
 
-create table review_survey_category
+create table survey_category
 (
-    review_survey_category_id bigint auto_increment
+    survey_category_id bigint auto_increment
         primary key,
     product_id                bigint       null,
     name                      varchar(255) null,
